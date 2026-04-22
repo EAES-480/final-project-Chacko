@@ -11,14 +11,14 @@ library(broom)
 
 ## 1. Data
 
-The data set contains sub-hourly sap flow measurements recorded from 3–4 tree species at a forested field site. Each observation includes a time stamp, a species identifier, and an inner and outer sap flow rate. Before analysis, sub-hourly readings will be aggregated to daily means to reduce high-frequency noise while preserving seasonal trends. Missing values and any sensor dropout periods will be identified and removed prior to modeling.
+The data set contains sub-hourly sap flow measurements recorded from 3–4 tree species at a forested field site. Each observation includes a time stamp, a species identifier, and an inner and outer sap flow rate. Before analysis, sub-hourly readings will be averaged to daily means to reduce variation from high frequency observations, while preserving seasonal trends. Any missing values will be identified and removed prior to modeling.
 
 ## 2. Exploratory Visualization
 
-Three visualizations are planned. First, violin plots or boxplots of daily mean sap flow grouped by species will reveal whether baseline water transport rates differ across species. Second, a time series of sap flow for each species across the growing season will highlight phenological differences and whether species diverge in water use at particular times of year. Third, a plot of sap flow variability (e.g., standard deviation or interquartile range) by species will help assess whether some species are more consistent in their water transport than others — a pattern that can be just as ecologically informative as differences in mean rates.
+Three visualizations are planned. First, violin plots/boxplots of daily mean sap flow grouped by species will reveal whether water transport rates differ across species. Second, a time series of sap flow for each species across the growing season will highlight chronological differences and whether species diverge in water use at particular times of year. Third, a plot of sap flow variability by species will help identify if some species are more consistent in their water transport than others, a pattern that can be just as informative as differences in mean rates.
 
 ## 3. Possible question and method
 
-Do tree species differ significantly in their sap flow rates across the growing season?
+Do tree species differ significantly in their sap flow rates across either the growing season, or just in general?
 
-Aggregate the sub-hourly observations into daily averages and then compare to other trees. Can also use the plots to visualize 
+average the sub-hourly observations into daily averages and then compare to other trees. Will need to compare baseline rates as well as rates durring different seasons. Can also use the plots to help visualize and indentify variablility.
