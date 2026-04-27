@@ -1,6 +1,6 @@
 ---
 title: "Project proposal"
-author: "Team name"
+author: "Eli Chacko"
 output: html_document
 ---
 
@@ -9,16 +9,37 @@ library(tidyverse)
 library(broom)
 ```
 
+> GRADE GM: 14/20 - nice ideas overall but some elements and details were missing. please review my comments below.
+
+> Description: 5/8 - in addition to points deducted below, i could not find your data in your Posit project or `data` folder, so I coul dnot look at what data you have retrieved.
+> Content: 8/10
+> Quality: 1/2 
+
 ## 1. Data
 
 The data set contains sub-hourly sap flow measurements recorded from 3–4 tree species at a forested field site. Each observation includes a time stamp, a species identifier, and an inner and outer sap flow rate. Before analysis, sub-hourly readings will be averaged to daily means to reduce variation from high frequency observations, while preserving seasonal trends. Any missing values will be identified and removed prior to modeling.
+
+> GM: Nice idea to remove the sub-daily variation. This will work best if you want to analyze longer term patterns (like seasonality).
 
 ## 2. Exploratory Visualization
 
 Three visualizations are planned. First, violin plots/boxplots of daily mean sap flow grouped by species will reveal whether water transport rates differ across species. Second, a time series of sap flow for each species across the growing season will highlight chronological differences and whether species diverge in water use at particular times of year. Third, a plot of sap flow variability by species will help identify if some species are more consistent in their water transport than others, a pattern that can be just as informative as differences in mean rates.
 
+> GM -2: Here I was hoping you would insert a few code chunks and show some data summaries and/or visualizations, so I had to deduct two points. 
+
+> GM: Otherwise these exploratory plot ideas sound good.
+
+> GM: CI Method: You might also calculate a monthly mean and standard deviation for each species, and then, you could bootstrap resample each month to compute the population mean for each tree, and evaluate the difference between species at the 95% confidence level (by seeing if their 95% confidence intervals overlap, or not).
+
 ## 3. Possible question and method
 
 Do tree species differ significantly in their sap flow rates across either the growing season, or just in general?
 
+> GM: I might modify this slightly to create a sequence of questions. Q1: Do tree species differ significatly in their monthly sap flow rates during the whole year (use anova sap_flow ~ month + species); Q2: if so, which months and trees are different (using t-tests or 95% CI method above); Q3: what conditoins (e.g., general time of year, or weather patterns in given months) tend to accentuate or dampen species differences?
+
+>GM:  Two thoughts: consider if mean daily or peak daily is the best measure of sap flow dynamics over time. you could do this by looking at daily patterns in sap flow. If even during the growing season, the sap flow at night returns close to zero, you might want to use peak flow instead, because the daily standard deviation on the daily mean estimate might be very large. This could potentially obscure seasonal patterns in later analyses.
+
 average the sub-hourly observations into daily averages and then compare to other trees. Will need to compare baseline rates as well as rates durring different seasons. Can also use the plots to help visualize and indentify variablility.
+
+> GM: -2: I had to deduct a couple of points here because I'd hoped to see a more step-by-step breakdown of your methods with rerference to particular packages we've used in class.
+
