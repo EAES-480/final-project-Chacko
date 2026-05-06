@@ -6,6 +6,8 @@
     <meta name="author" content="Team name   Names of team members" />
     <meta name="date" content="2026-05-06" />
     <script src="libs/header-attrs-2.31/header-attrs.js"></script>
+    <script src="libs/kePrint-0.0.1/kePrint.js"></script>
+    <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
@@ -41,36 +43,49 @@ class: center, middle, inverse, title-slide
 
 
 
----
+
+
 
 class: center, middle
 
-## Does sapflow rate differ between urban tree species across Chicago?
+## Research Questions
 
+- Do sapflow rates differ between urban tree species in Chicago?
+
+- How does the site location affect sapflow rates across species? 
+
+- Are there consistent patterns across the data between species and sites?
 ---
 
 # Background
 
-- [What is sapflow? Brief explanation here]
+- Sapflow is the movement of water and nutrients through a plant's tissue, in this case trees 
 
-- [Why does it matter in an urban environment?]
+- Learning the difference in sapflow rates between tree species and sites can tell us a lot about the environments they need to thrive, and whether or not that is being provided.
 
-- Data collected across 3 sites in Chicago: **CSU, NU, and UIC**
+- Data collected across 4 sites in Chicago: **CSU, NU, NEIU(omitted) and UIC**
 
-- **12 trees** across **5 species**: American Elm, Cottonwood, Honey Locust, Maple, and Oak
+- **16 trees** across **5 species**: American Elm, Cottonwood, Honey Locust, Maple, and Oak
 
 - Two sensors per tree: inner and outer sapflow (cm/hr)
 
 ---
 
 # Data
+.pull-left[
+- Retrieved data from a CROCUS node dashboard.
 
-- [Brief description of where the data came from]
+- Data was originally obtained through sapflow sensors with probes placed inside trees 
 
-- [Time period covered]
+- April 1, 2026 - April 30, 2026
 
-- [Any notes on data quality or processing decisions]
+- Trees at NEIU were unique to that location, so they could not be compared to trees of the same species from other locations
 
+- Several sensors were offline and their data could not be retrieved 
+]
+.pull-right[
+&lt;img src="img/sapflow_image.jpg" alt="" width="100%" /&gt;
+]
 ---
 
 class: inverse, center, middle
@@ -81,7 +96,7 @@ class: inverse, center, middle
 
 # Sapflow Over Time by Species
 
-![](img/timeseries.png)&lt;!-- --&gt;
+&lt;img src="presentation_files/figure-html/timeseries-plot-1.png" alt="" width="100%" /&gt;
 
 ---
 
@@ -93,8 +108,8 @@ class: inverse, center, middle
 
 # Sapflow by Species and Site
 
-&lt;table&gt;
-&lt;caption&gt;Summary Statistics of Daily Average Sapflow by Species and Site&lt;/caption&gt;
+&lt;table class="table" style="font-size: 11px; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;Summary Statistics of Daily Average Sapflow by Species and Site&lt;/caption&gt;
  &lt;thead&gt;
   &lt;tr&gt;
    &lt;th style="text-align:left;"&gt; Site &lt;/th&gt;
@@ -284,7 +299,7 @@ class: inverse, center, middle
 
 # Inner Sensor Model Results
 
-&lt;table&gt;
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
 &lt;caption&gt;Inner Sensor: Effect of Species and Site on Sapflow (relative to American Elm at CSU)&lt;/caption&gt;
  &lt;thead&gt;
   &lt;tr&gt;
@@ -345,7 +360,7 @@ class: inverse, center, middle
 
 # Outer Sensor Model Results
 
-&lt;table&gt;
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
 &lt;caption&gt;Outer Sensor: Effect of Species and Site on Sapflow (relative to American Elm at CSU)&lt;/caption&gt;
  &lt;thead&gt;
   &lt;tr&gt;
@@ -406,17 +421,18 @@ class: inverse, center, middle
 
 # Sapflow Distribution by Species and Site
 
-![](img/boxplot.png)&lt;!-- --&gt;
+&lt;img src="presentation_files/figure-html/boxplot-site-1.png" alt="" width="100%" /&gt;
 
 ---
 
 # Conclusions
 
-- [Key finding 1]
+- Sapflow rates differ significantly between species and site — linear models show that species and site together explain 28-33% of the variation in sapflow (R² = 0.28-0.33), with site location having a consistent effect across both sensors
 
-- [Key finding 2]
+- Inner and outer sensors tell different stories — Cottonwood shows opposite patterns between sensors (higher outer, lower inner), while Maple and Oak are only significantly higher than American Elm in the inner sensor, suggesting the two sensors capture different aspects of water movement
 
-- [Key finding 3]
+
+- Site matters as much as species — NU trees consistently show lower sapflow than CSU across all species and both sensors, while UIC trees show higher sapflow, indicating that local environmental conditions at each site play a significant role in tree water use
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

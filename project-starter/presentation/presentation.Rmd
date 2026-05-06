@@ -1,7 +1,7 @@
 ---
 title: "Sapflow Analysis Across Urban Tree Species"
 subtitle: "EAES 480 Final Project"
-author: "Team name <br> Names of team members"
+author: "Elijah Chacko"
 institute: "University of Illinois at Chicago"
 date: "`r Sys.Date()`"
 output:
@@ -13,21 +13,24 @@ output:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
+
 ---
 
 ```{r chunk-load-packages, include=FALSE}
 library(tidyverse)
 library(tidymodels)
 library(knitr)
+library(kableExtra)
 library(xaringanthemer)
 library(lubridate)
 ```
 
+
 ```{r chunk-setup, include=FALSE}
-knitr::opts_chunk$set(cache = FALSE)
+knitr::opts_chunk$set(fig.retina = 1, dpi = 100, fig.width = 6, fig.asp = 0.5, out.width = "100%")
 ```
 
-```{r chunk-process-data, include=FALSE}
+```{r process-data, include=FALSE}
 if (!file.exists("/cloud/project/project-starter/data/sapflow_daily.rds")) {
   data_folder <- "/cloud/project/project-starter/data"
   file_list <- list.files(path = data_folder, pattern = "*.csv", full.names = TRUE, recursive = TRUE)
@@ -54,11 +57,11 @@ if (!file.exists("/cloud/project/project-starter/data/sapflow_daily.rds")) {
 }
 ```
 
-```{r chunk-load-data, include=FALSE}
+```{r load-data, include=FALSE}
 sapflow_daily <- readRDS("/cloud/project/project-starter/data/sapflow_daily.rds")
 ```
 
-```{r chunk-model-data, include=FALSE}
+```{r model-data, include=FALSE}
 sapflow_inner <- sapflow_daily |>
   filter(`Sensor Data` == "uncorrected_inner (cm/hr)")
 
@@ -69,36 +72,50 @@ lm_inner <- lm(daily_mean ~ species + site, data = sapflow_inner)
 lm_outer <- lm(daily_mean ~ species + site, data = sapflow_outer)
 ```
 
----
+
 
 class: center, middle
 
-## Does sapflow rate differ between urban tree species across Chicago?
+## Research Questions
 
+- Do sapflow rates differ between urban tree species in Chicago?
+
+- How does the site location affect sapflow rates across species? 
+
+- Are there consistent patterns across the data between species and sites?
 ---
 
 # Background
 
-- [What is sapflow? Brief explanation here]
+- Sapflow is the movement of water and nutrients through a plant's tissue, in this case trees 
 
-- [Why does it matter in an urban environment?]
+- Learning the difference in sapflow rates between tree species and sites can tell us a lot about the environments they need to thrive, and whether or not that is being provided.
 
-- Data collected across 3 sites in Chicago: **CSU, NU, and UIC**
+- Data collected across 4 sites in Chicago: **CSU, NU, NEIU(omitted) and UIC**
 
-- **12 trees** across **5 species**: American Elm, Cottonwood, Honey Locust, Maple, and Oak
+- **16 trees** across **5 species**: American Elm, Cottonwood, Honey Locust, Maple, and Oak
 
 - Two sensors per tree: inner and outer sapflow (cm/hr)
 
 ---
 
 # Data
+.pull-left[
+- Retrieved data from a CROCUS node dashboard.
 
-- [Brief description of where the data came from]
+- Data was originally obtained through sapflow sensors with probes placed inside trees 
 
-- [Time period covered]
+- April 1, 2026 - April 30, 2026
 
-- [Any notes on data quality or processing decisions]
+- Trees at NEIU were unique to that location, so they could not be compared to trees of the same species from other locations
 
+- Several sensors were offline and their data could not be retrieved 
+]
+.pull-right[
+```{r load-image, echo=FALSE}
+include_graphics("img/sapflow_image.jpg")
+```
+]
 ---
 
 class: inverse, center, middle
@@ -109,8 +126,28 @@ class: inverse, center, middle
 
 # Sapflow Over Time by Species
 
-```{r chunk-timeseries-plot, echo=FALSE}
-knitr::include_graphics("img/timeseries.png")
+```{r timeseries-plot, fig.width=10, fig.height=7, echo=FALSE, warning=FALSE, message=FALSE}
+sapflow_daily |>
+  ggplot(aes(x = date, y = daily_mean, color = tree_id, linetype = `Sensor Data`)) +
+  geom_line(alpha = 0.7) +
+  facet_wrap(~ species, ncol = 2) +
+  scale_linetype_manual(
+    values = c("uncorrected_inner (cm/hr)" = "solid", "uncorrected_outer (cm/hr)" = "dashed"),
+    labels = c("uncorrected_inner (cm/hr)" = "Inner", "uncorrected_outer (cm/hr)" = "Outer")
+  ) +
+  labs(
+    title    = "Daily Average Sapflow by Species Over Time",
+    x        = "Date",
+    y        = "Sapflow (cm/hr)",
+    color    = "Tree",
+    linetype = "Sensor"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    text            = element_text(size = 12),
+    strip.text      = element_text(size = 12)
+  )
 ```
 
 ---
@@ -123,7 +160,7 @@ class: inverse, center, middle
 
 # Sapflow by Species and Site
 
-```{r chunk-summary-table, echo=FALSE, warning=FALSE, message=FALSE}
+```{r summary-table, echo=FALSE, warning=FALSE, message=FALSE}
 sapflow_daily |>
   group_by(species, site, `Sensor Data`) |>
   summarise(
@@ -143,7 +180,8 @@ sapflow_daily |>
     Max       = max
   ) |>
   select(Site, Species, Sensor, Mean, `Std Dev`, Min, Max) |>
-  kable(format = "html", caption = "Summary Statistics of Daily Average Sapflow by Species and Site")
+  kable(format = "html", caption = "Summary Statistics of Daily Average Sapflow by Species and Site") |>
+  kable_styling(font_size = 11)
 ```
 
 ---
@@ -176,7 +214,7 @@ class: inverse, center, middle
 
 # Inner Sensor Model Results
 
-```{r chunk-lm-inner-table, echo=FALSE, warning=FALSE, message=FALSE}
+```{r lm-inner-table, echo=FALSE, warning=FALSE, message=FALSE}
 tidy(lm_inner, conf.int = TRUE) |>
   filter(term != "(Intercept)") |>
   mutate(
@@ -195,14 +233,15 @@ tidy(lm_inner, conf.int = TRUE) |>
   ) |>
   select(Group, Term, Estimate, `Std Error`, `P-value`) |>
   arrange(Group, Term) |>
-  kable(format = "html", caption = "Inner Sensor: Effect of Species and Site on Sapflow (relative to American Elm at CSU)")
+  kable(format = "html", caption = "Inner Sensor: Effect of Species and Site on Sapflow (relative to American Elm at CSU)") |>
+  kable_styling()
 ```
 
 ---
 
 # Outer Sensor Model Results
 
-```{r chunk-lm-outer-table, echo=FALSE, warning=FALSE, message=FALSE}
+```{r lm-outer-table, echo=FALSE, warning=FALSE, message=FALSE}
 tidy(lm_outer, conf.int = TRUE) |>
   filter(term != "(Intercept)") |>
   mutate(
@@ -221,23 +260,45 @@ tidy(lm_outer, conf.int = TRUE) |>
   ) |>
   select(Group, Term, Estimate, `Std Error`, `P-value`) |>
   arrange(Group, Term) |>
-  kable(format = "html", caption = "Outer Sensor: Effect of Species and Site on Sapflow (relative to American Elm at CSU)")
+  kable(format = "html", caption = "Outer Sensor: Effect of Species and Site on Sapflow (relative to American Elm at CSU)") |>
+  kable_styling()
 ```
 
 ---
 
 # Sapflow Distribution by Species and Site
 
-```{r chunk-boxplot-site, echo=FALSE}
-knitr::include_graphics("img/boxplot.png")
+```{r boxplot-site, fig.width=10, fig.height=6, echo=FALSE, warning=FALSE, message=FALSE}
+sapflow_daily |>
+  ggplot(aes(x = species, y = daily_mean, fill = site)) +
+  geom_boxplot(alpha = 0.7) +
+  facet_wrap(~ `Sensor Data`, ncol = 1,
+             labeller = labeller(`Sensor Data` = c(
+               "uncorrected_inner (cm/hr)" = "Inner Sensor",
+               "uncorrected_outer (cm/hr)" = "Outer Sensor"
+             ))) +
+  labs(
+    title = "Sapflow Distribution by Species and Site",
+    x     = "Species",
+    y     = "Daily Mean Sapflow (cm/hr)",
+    fill  = "Site"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    text            = element_text(size = 12),
+    strip.text      = element_text(size = 12),
+    axis.text.x     = element_text(angle = 25, hjust = 1)
+  )
 ```
 
 ---
 
 # Conclusions
 
-- [Key finding 1]
+- Sapflow rates differ significantly between species and site — linear models show that species and site together explain 28-33% of the variation in sapflow (R² = 0.28-0.33), with site location having a consistent effect across both sensors
 
-- [Key finding 2]
+- Inner and outer sensors tell different stories — Cottonwood shows opposite patterns between sensors (higher outer, lower inner), while Maple and Oak are only significantly higher than American Elm in the inner sensor, suggesting the two sensors capture different aspects of water movement
 
-- [Key finding 3]
+
+- Site matters as much as species — NU trees consistently show lower sapflow than CSU across all species and both sensors, while UIC trees show higher sapflow, indicating that local environmental conditions at each site play a significant role in tree water use
