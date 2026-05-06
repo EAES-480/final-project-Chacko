@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Sapflow Analysis Across Urban Tree Species</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Team name   Names of team members" />
+    <meta name="date" content="2026-05-06" />
+    <script src="libs/header-attrs-2.31/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Sapflow Analysis Across Urban Tree Species
+]
+.subtitle[
+## EAES 480 Final Project
+]
+.author[
+### Team name <br> Names of team members
+]
+.institute[
+### University of Illinois at Chicago
+]
+.date[
+### 2026-05-06
+]
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+class: center, middle
+
+## Does sapflow rate differ between urban tree species across Chicago?
+
+---
+
+# Background
+
+- [What is sapflow? Brief explanation here]
+
+- [Why does it matter in an urban environment?]
+
+- Data collected across 3 sites in Chicago: **CSU, NU, and UIC**
+
+- **12 trees** across **5 species**: American Elm, Cottonwood, Honey Locust, Maple, and Oak
+
+- Two sensors per tree: inner and outer sapflow (cm/hr)
+
+---
+
+# Data
+
+- [Brief description of where the data came from]
+
+- [Time period covered]
+
+- [Any notes on data quality or processing decisions]
+
+---
+
+class: inverse, center, middle
+
+# Exploratory Analysis
+
+---
+
+# Sapflow Over Time by Species
+
+![](img/timeseries.png)&lt;!-- --&gt;
+
+---
+
+class: inverse, center, middle
+
+# Summary Statistics
+
+---
+
+# Sapflow by Species and Site
+
+&lt;table&gt;
+&lt;caption&gt;Summary Statistics of Daily Average Sapflow by Species and Site&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Site &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Species &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Sensor &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Mean &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Std Dev &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Min &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Max &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; CSU &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; American Elm &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; uncorrected_inner (cm/hr) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.539 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.591 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.053 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.276 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; CSU &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; American Elm &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; uncorrected_outer (cm/hr) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.492 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.246 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.202 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.197 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; UIC &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; American Elm &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; uncorrected_inner (cm/hr) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.108 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.879 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.098 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.336 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; UIC &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; American Elm &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; uncorrected_outer (cm/hr) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.596 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.375 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.720 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.146 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; CSU &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Cottonwood &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; uncorrected_inner (cm/hr) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.002 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.285 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2.616 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.832 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; CSU &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Cottonwood &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; uncorrected_outer (cm/hr) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.315 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.541 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.171 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.600 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; UIC &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Honey Locust &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; uncorrected_inner (cm/hr) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.031 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.148 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.808 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.278 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; UIC &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Honey Locust &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; uncorrected_outer (cm/hr) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.918 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.576 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.284 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.042 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; CSU &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Maple &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; uncorrected_inner (cm/hr) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.831 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.725 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.038 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8.201 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; CSU &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Maple &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; uncorrected_outer (cm/hr) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.012 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.484 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9.245 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; NU &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Maple &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; uncorrected_inner (cm/hr) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.504 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.105 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2.854 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.268 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; NU &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Maple &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; uncorrected_outer (cm/hr) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.357 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.573 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.978 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.322 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; UIC &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Maple &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; uncorrected_inner (cm/hr) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.630 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.561 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.121 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16.309 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; UIC &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Maple &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; uncorrected_outer (cm/hr) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.900 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.442 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.086 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.098 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; NU &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Oak &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; uncorrected_inner (cm/hr) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.554 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.670 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.428 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.560 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; NU &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Oak &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; uncorrected_outer (cm/hr) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.027 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.382 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.726 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.021 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+class: inverse, center, middle
+
+# Linear Models
+
+---
+
+# Does Species and Site Predict Sapflow?
+
+.pull-left[
+**Inner Sensor**
+- **Maple** and **Oak** significantly higher than American Elm
+- **Cottonwood** significantly lower than American Elm
+- **NU** significantly lower, **UIC** significantly higher than CSU
+- R² = 0.33
+]
+
+.pull-right[
+**Outer Sensor**
+- **Cottonwood** significantly higher than American Elm
+- **Honey Locust, Maple, Oak** not significant
+- **NU** significantly lower, **UIC** significantly higher than CSU
+- R² = 0.28
+]
+
+---
+
+# Inner Sensor Model Results
+
+&lt;table&gt;
+&lt;caption&gt;Inner Sensor: Effect of Species and Site on Sapflow (relative to American Elm at CSU)&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Group &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Term &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Estimate &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Std Error &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; P-value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Site &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NU &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2.438 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.402 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Site &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; UIC &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.021 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.411 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Species &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Cottonwood &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.755 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.580 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0027 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Species &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Honey Locust &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.257 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.564 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.6490 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Species &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Maple &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.189 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.413 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Species &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Oak &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.239 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.569 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0001 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+# Outer Sensor Model Results
+
+&lt;table&gt;
+&lt;caption&gt;Outer Sensor: Effect of Species and Site on Sapflow (relative to American Elm at CSU)&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Group &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Term &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Estimate &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Std Error &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; P-value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Site &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NU &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.155 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.287 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0001 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Site &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; UIC &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.621 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.294 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0351 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Species &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Cottonwood &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.573 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.414 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0002 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Species &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Honey Locust &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.446 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.402 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2687 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Species &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Maple &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.230 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.295 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.4349 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Species &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Oak &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.561 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.406 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1679 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+# Sapflow Distribution by Species and Site
+
+![](img/boxplot.png)&lt;!-- --&gt;
+
+---
+
+# Conclusions
+
+- [Key finding 1]
+
+- [Key finding 2]
+
+- [Key finding 3]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "ratio": "16:9",
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

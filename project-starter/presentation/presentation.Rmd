@@ -1,6 +1,6 @@
 ---
-title: "Presentation title"
-subtitle: "Presentation subtitle (if any)"
+title: "Sapflow Analysis Across Urban Tree Species"
+subtitle: "EAES 480 Final Project"
 author: "Team name <br> Names of team members"
 institute: "University of Illinois at Chicago"
 date: "`r Sys.Date()`"
@@ -15,166 +15,229 @@ output:
       countIncrementalSlides: false
 ---
 
-```{r load-packages, include = FALSE}
-# Add any additional packages you need to this chunk
+```{r chunk-load-packages, include=FALSE}
 library(tidyverse)
 library(tidymodels)
-library(palmerpenguins)
 library(knitr)
 library(xaringanthemer)
-library(tidyverse)
 library(lubridate)
 ```
 
-```{r setup, include=FALSE}
-# For better figure resolution
-knitr::opts_chunk$set(fig.retina = 3, dpi = 300, fig.width = 6, fig.asp = 0.618, out.width = "80%")
+```{r chunk-setup, include=FALSE}
+knitr::opts_chunk$set(cache = FALSE)
 ```
 
-```{r load-data, include=FALSE}
-# Load your data here
+```{r chunk-process-data, include=FALSE}
+if (!file.exists("/cloud/project/project-starter/data/sapflow_daily.rds")) {
+  data_folder <- "/cloud/project/project-starter/data"
+  file_list <- list.files(path = data_folder, pattern = "*.csv", full.names = TRUE, recursive = TRUE)
+  sapflow_daily <- file_list |>
+    map(\(filepath) {
+      df <- read_csv(filepath, show_col_types = FALSE)
+      if (!"Sensor Data" %in% names(df)) {
+        df <- df |> pivot_longer(cols = -Timestamp, names_to = "Sensor Data", values_to = "Value")
+      }
+      df |>
+        filter(`Sensor Data` %in% c("uncorrected_inner (cm/hr)", "uncorrected_outer (cm/hr)")) |>
+        mutate(
+          site    = str_extract(filepath, "(?<=data/)[^/]+"),
+          tree_id = str_remove(basename(filepath), "\\.csv$"),
+          species = str_remove(tree_id, "-[^-]+$") |> str_replace_all("_", " "),
+          date    = as_date(ymd_hms(Timestamp))
+        ) |>
+        group_by(site, tree_id, species, date, `Sensor Data`) |>
+        summarise(daily_mean = mean(Value, na.rm = TRUE), .groups = "drop")
+    }) |>
+    list_rbind() |>
+    filter(site != "NEIU")
+  saveRDS(sapflow_daily, "/cloud/project/project-starter/data/sapflow_daily.rds")
+}
 ```
 
-```{r}
-style_xaringan(
-  title_slide_background_image = "img/confetti.jpg"
-)
+```{r chunk-load-data, include=FALSE}
+sapflow_daily <- readRDS("/cloud/project/project-starter/data/sapflow_daily.rds")
 ```
 
+```{r chunk-model-data, include=FALSE}
+sapflow_inner <- sapflow_daily |>
+  filter(`Sensor Data` == "uncorrected_inner (cm/hr)")
+
+sapflow_outer <- sapflow_daily |>
+  filter(`Sensor Data` == "uncorrected_outer (cm/hr)")
+
+lm_inner <- lm(daily_mean ~ species + site, data = sapflow_inner)
+lm_outer <- lm(daily_mean ~ species + site, data = sapflow_outer)
+```
+
+---
 
 class: center, middle
 
-## A statement of the overall goal / research question
+## Does sapflow rate differ between urban tree species across Chicago?
+
+---
+
+# Background
+
+- [What is sapflow? Brief explanation here]
+
+- [Why does it matter in an urban environment?]
+
+- Data collected across 3 sites in Chicago: **CSU, NU, and UIC**
+
+- **12 trees** across **5 species**: American Elm, Cottonwood, Honey Locust, Maple, and Oak
+
+- Two sensors per tree: inner and outer sapflow (cm/hr)
+
+---
+
+# Data
+
+- [Brief description of where the data came from]
+
+- [Time period covered]
+
+- [Any notes on data quality or processing decisions]
 
 ---
 
 class: inverse, center, middle
 
-# Section title
+# Exploratory Analysis
 
 ---
 
-# Hello World
+# Sapflow Over Time by Species
 
-- Click the `Knit` button to compile your presentation
-
-- Make sure to commit and push all resulting files to your GitHub repo
-
----
-
-class: inverse, middle, center
-
-# Using xaringan
+```{r chunk-timeseries-plot, echo=FALSE}
+knitr::include_graphics("img/timeseries.png")
+```
 
 ---
 
-# xaringan
+class: inverse, center, middle
 
-- The presentation is created using the `xaringan` package
-
-- Use `---` to separate slides and `--` for incremental builds
-
---
-
-- Like this
+# Summary Statistics
 
 ---
 
-# Layouts
+# Sapflow by Species and Site
 
-You can use plain text
+```{r chunk-summary-table, echo=FALSE, warning=FALSE, message=FALSE}
+sapflow_daily |>
+  group_by(species, site, `Sensor Data`) |>
+  summarise(
+    mean    = round(mean(daily_mean, na.rm = TRUE), 3),
+    sd      = round(sd(daily_mean,   na.rm = TRUE), 3),
+    min     = round(min(daily_mean,  na.rm = TRUE), 3),
+    max     = round(max(daily_mean,  na.rm = TRUE), 3),
+    .groups = "drop"
+  ) |>
+  rename(
+    Species   = species,
+    Site      = site,
+    Sensor    = `Sensor Data`,
+    Mean      = mean,
+    `Std Dev` = sd,
+    Min       = min,
+    Max       = max
+  ) |>
+  select(Site, Species, Sensor, Mean, `Std Dev`, Min, Max) |>
+  kable(format = "html", caption = "Summary Statistics of Daily Average Sapflow by Species and Site")
+```
 
-- or bullet points
+---
+
+class: inverse, center, middle
+
+# Linear Models
+
+---
+
+# Does Species and Site Predict Sapflow?
 
 .pull-left[
-or text in two columns $^*$
+**Inner Sensor**
+- **Maple** and **Oak** significantly higher than American Elm
+- **Cottonwood** significantly lower than American Elm
+- **NU** significantly lower, **UIC** significantly higher than CSU
+- R² = 0.33
 ]
+
 .pull-right[
-- like
-- this
-]
-
-.footnote[
-[*] And add footnotes
-]
-
----
-
-# Code
-
-```{r boring-regression}
-# a boring regression
-model <- lm(dist ~ speed, data = cars)
-tidy(model)
-glance(model)
-```
-
----
-
-# Plots
-
-```{r recode-species, echo = FALSE}
-# In this chunk I'm doing a bunch of analysis that I don't want to present 
-# in my slides. But I need the resulting data frame for a plot I want to present.
-iris_modified <- iris %>%
-  mutate(Species = fct_other(Species, keep = "setosa"))
-```
-
-```{r plot-iris, echo = FALSE}
-# Code hidden with echo = FALSE
-# Uses modified iris dataset from previous chunk
-# Play around with height and width until you're happy with the look
-ggplot(data = iris_modified, mapping = aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
-  geom_point() + 
-  theme_minimal() # theme options: https://ggplot2.tidyverse.org/reference/ggtheme.html
-```
-
----
-
-## Plot and text
-
-.pull-left[
-- Some text
-- goes here
-]
-.pull-right[
-```{r warning=FALSE, out.width="100%", fig.width=4, echo=FALSE}
-# see how I changed out.width and fig.width from defaults
-# to make the figure bigger
-ggplot(penguins, aes(x = bill_length_mm, y = species, color = species)) +
-  geom_boxplot() +
-  theme_minimal()
-```
+**Outer Sensor**
+- **Cottonwood** significantly higher than American Elm
+- **Honey Locust, Maple, Oak** not significant
+- **NU** significantly lower, **UIC** significantly higher than CSU
+- R² = 0.28
 ]
 
 ---
 
-# Tables
+# Inner Sensor Model Results
 
-If you want to generate a table, make sure it is in the HTML format (instead of Markdown or other formats), e.g.,
-
-```{r iris-table, echo = FALSE}
-kable(head(iris), format = "html")
+```{r chunk-lm-inner-table, echo=FALSE, warning=FALSE, message=FALSE}
+tidy(lm_inner, conf.int = TRUE) |>
+  filter(term != "(Intercept)") |>
+  mutate(
+    term      = str_remove(term, "^species|^site"),
+    group     = if_else(term %in% c("NU", "UIC"), "Site", "Species"),
+    estimate  = round(estimate, 3),
+    std.error = round(std.error, 3),
+    p.value   = round(p.value, 4)
+  ) |>
+  rename(
+    Term        = term,
+    Group       = group,
+    Estimate    = estimate,
+    `Std Error` = std.error,
+    `P-value`   = p.value
+  ) |>
+  select(Group, Term, Estimate, `Std Error`, `P-value`) |>
+  arrange(Group, Term) |>
+  kable(format = "html", caption = "Inner Sensor: Effect of Species and Site on Sapflow (relative to American Elm at CSU)")
 ```
 
 ---
 
-# Images
+# Outer Sensor Model Results
 
-```{r castle, echo = FALSE, out.width = "60%", fig.align = "center", fig.cap = "Image credit: Photo by Enjoy Illinois."}
-include_graphics("img/chicago-fall.jpeg")
+```{r chunk-lm-outer-table, echo=FALSE, warning=FALSE, message=FALSE}
+tidy(lm_outer, conf.int = TRUE) |>
+  filter(term != "(Intercept)") |>
+  mutate(
+    term      = str_remove(term, "^species|^site"),
+    group     = if_else(term %in% c("NU", "UIC"), "Site", "Species"),
+    estimate  = round(estimate, 3),
+    std.error = round(std.error, 3),
+    p.value   = round(p.value, 4)
+  ) |>
+  rename(
+    Term        = term,
+    Group       = group,
+    Estimate    = estimate,
+    `Std Error` = std.error,
+    `P-value`   = p.value
+  ) |>
+  select(Group, Term, Estimate, `Std Error`, `P-value`) |>
+  arrange(Group, Term) |>
+  kable(format = "html", caption = "Outer Sensor: Effect of Species and Site on Sapflow (relative to American Elm at CSU)")
 ```
-
 
 ---
 
-# Feeling adventurous?
+# Sapflow Distribution by Species and Site
 
-- Want to find out more about `xaringan`? See https://slides.yihui.name/xaringan/#1.
+```{r chunk-boxplot-site, echo=FALSE}
+knitr::include_graphics("img/boxplot.png")
+```
 
-- You are welcomed to use the default styling of the slides. In fact, that's what I expect majority of you will do. You will differentiate yourself with the content of your presentation.
+---
 
-- But some of you might want to play around with slide styling. The 
-`xaringanthemer` provides some solutions for this that: https://pkg.garrickadenbuie.com/xaringanthemer.
+# Conclusions
 
-- And if you want more bells and whistles, there is also `xaringanExtra`: https://pkg.garrickadenbuie.com/xaringanExtra.
+- [Key finding 1]
+
+- [Key finding 2]
+
+- [Key finding 3]
